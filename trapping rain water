@@ -1,0 +1,50 @@
+// 
+first of all find out all the left maxi of each element
+and also find out right maxi of each element
+formula :
+x=min(left[i],right[i])-arr[i];
+
+
+#include <bits/stdc++.h> 
+long getTrappedWater(long *arr, int n){
+    long ans=0;
+    vector<long> left;
+    long max=0;
+    left.push_back(max);
+    for(int i=1;i<n;i++)
+    {
+        if(arr[i-1]>max)
+        {
+            max=arr[i-1];
+            left.push_back(max);
+        }
+        else
+          left.push_back(max);
+    }
+    vector<long> right;
+    max=0;
+    right.push_back(max);
+    for(int i=n-2;i>=0;i--)
+    {
+        if(arr[i+1]>max)
+        {
+            max=arr[i+1];
+            right.push_back(max);
+        }
+        else
+         right.push_back(max);
+    }
+    reverse(right.begin(),right.end());
+    for(int i=0;i<n;i++)
+    {
+        // cout<<left[i]<<" "<<right[i]<<endl;
+        long x=min(left[i],right[i])-arr[i];
+        if(x>=0)
+        {
+            ans=ans+x;
+        }
+    }
+    return ans;
+
+
+}
