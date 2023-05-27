@@ -1,0 +1,57 @@
+in this question we have brute force is that find all the triplet but the time comlexicity is o(n^3)
+but optimize approach is that fist of sort the array
+then fix one elment and start finding min closest sum
+
+
+
+
+
+
+
+
+
+#include <bits/stdc++.h>
+#include<climits>
+int closest3Sum(vector<int> &arr, int n, int target)
+{
+    sort(arr.begin(),arr.end());
+    int min_diff=INT_MAX;
+    int ans;
+    for(int i=0;i<n;i++)
+    {
+        int start=i+1;
+        int end=n-1;
+        while(start<end)
+        {
+            int sum=(arr[i]+arr[start]+arr[end]);           
+            if(arr[i]+arr[start]+arr[end]==target)
+            {
+                return target;
+            }
+            if(abs(target-sum)<=min_diff)
+            {
+                if(abs(target-sum)<min_diff)
+                {
+                     min_diff=abs(target-sum);
+                     ans=sum;
+                }
+                else
+                {
+                    if(sum<ans)
+                    ans=sum;
+                }
+                
+                
+            }
+            if(sum<target)
+            {
+                start++;
+            }
+            else if(sum>target)
+            {
+                end--;
+            }
+        }
+    }
+    return ans;  
+}
