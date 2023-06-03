@@ -1,0 +1,38 @@
+Node* reverse(Node* head)
+{
+    Node* cur=head;
+    Node* pre=NULL;
+    while(cur!=NULL)
+    {
+        Node* temp=cur->next;
+        cur->next=pre;
+        pre=cur;
+        cur=temp;
+    }
+    return pre;
+}
+bool compute(Node* head)
+{
+   Node* fast=head;
+   Node* slow=head;
+   while(fast!=NULL && fast->next!=NULL)
+   {
+       slow=slow->next;
+       fast=fast->next->next;
+   }
+ 
+   Node* mid=slow;
+ 
+   Node* last=reverse(mid);
+ 
+   while(last!=NULL)
+   {
+ 
+       if(last->data!=head->data)
+       {
+           return false;
+       }
+       head=head->next;
+       last=last->next;
+   }
+   return true;
