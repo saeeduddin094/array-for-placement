@@ -1,0 +1,29 @@
+#include<algorithm>
+
+int calculateMinPatforms(int at[], int dt[], int n) {
+    vector< pair<int,char> > p;
+    for(int i=0;i<n;i++)
+    {
+        p.push_back(make_pair(at[i],'a'));
+        p.push_back(make_pair(dt[i],'d'));
+    }
+    sort(p.begin(),p.end());
+   
+    int count=0;
+    int max=0;
+    for(int i=0;i<n;i++)
+    {
+        if(p[i].second=='a')
+        {
+            count++;
+            if(count>max)
+            {
+                max=count;
+            }
+        }
+        else{
+            count--;
+        }
+    }
+    return max;
+}
