@@ -1,0 +1,39 @@
+#include <bits/stdc++.h> 
+#include<algorithm>
+vector<int> nextPermutation(vector<int> &arr, int n)
+{
+   int index;
+   bool found=false;
+   if(n==1)
+   {
+       return arr;
+   }
+   for(int i=n-1;i>=1;i--)
+   {
+       if(arr[i]>arr[i-1])
+       {
+           index=i;
+           found=true;
+           break;
+       }
+   }
+   if(found==false)
+   {
+       sort(arr.begin(),arr.end());
+       return arr;
+   }
+   int toswap;
+   int mini=INT_MAX;
+   for(int i=index;i<n;i++)
+   {
+        if(arr[i]-arr[index-1]<mini && arr[i]-arr[index-1]>0)
+        {
+            mini=arr[i]-arr[index-1];
+            toswap=i;
+        }
+   }
+   swap(arr[index-1],arr[toswap]);
+   sort(arr.begin()+index,arr.end());
+   return arr;
+
+}
