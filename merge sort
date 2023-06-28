@@ -1,0 +1,62 @@
+void mergesort(vector<int> &arr,int start,int end)
+{
+    int mid=(start+end)/2;
+    int len1=mid-start+1;
+    int len2=end-mid;
+    vector<int> left(len1);
+    vector<int> right(len2);
+    int mainindex=start;
+
+    //copy of original array
+
+    for(int i=0;i<len1;i++)
+    {
+        left[i]=arr[mainindex++];
+    }
+    mainindex=mid+1;
+    for(int i=0;i<len2;i++)
+    {
+        right[i]=arr[mainindex++];
+    }
+    int index1=0;
+    int index2=0;
+    mainindex=start;
+
+   //sorting of dynamic  array and copy to main array
+
+    while(index1<len1 && index2<len2)
+    {
+        if(left[index1]<right[index2])
+        {
+            arr[mainindex++]=left[index1++];
+        }
+        else
+        {
+            arr[mainindex++]=right[index2++];
+        }
+    }
+    while(index1<len1)
+    {
+        arr[mainindex++]=left[index1++];
+    }
+    while(index2<len2)
+    {
+        arr[mainindex++]=right[index2++];
+    }
+}
+void merge(vector<int> &arr,int start,int end)
+{
+    if(start>=end)
+    {
+        return ;
+    }
+    int mid=(start+end)/2;
+    merge(arr,start,mid);
+    merge(arr,mid+1,end);
+    mergesort(arr,start,end);
+} 
+void mergeSort(vector < int > & arr, int n) {
+    int start=0;
+    int end=n-1;
+    merge(arr,start,end);
+}
