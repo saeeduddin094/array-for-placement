@@ -1,0 +1,47 @@
+    void insert(Node* &clonehead,Node* &clonetail,int value)
+    {
+        Node* newnode=new Node(value);
+        if(clonehead==NULL)
+        {
+            clonehead=newnode;
+            clonetail=newnode;
+            return ;
+        }
+        else
+        {
+            clonetail->next=newnode;
+            clonetail=newnode;
+        }
+    }
+    Node *copyList(Node *head)
+    {
+        //step 1 copy of original node into clone
+        Node* originalhead=head;
+        Node* clonehead=NULL;
+        Node* clonetail=NULL;
+        while(originalhead!=NULL)
+        {
+            insert(clonehead,clonetail,originalhead->data);
+            originalhead=originalhead->next;
+        }
+        // step 2 construct mapping for old to new
+        unordered_map<Node* ,Node* > mp;
+        originalhead=head;
+        Node* head1=clonehead;
+        while(originalhead!=NULL)
+        {
+            mp[originalhead]=head1;
+            head1=head1->next;
+            originalhead=originalhead->next;
+        }
+        //step 3 point arbitary pointer
+        originalhead=head;
+        head1=clonehead;
+        while(originalhead!=NULL)
+        {
+            head1->arb=mp[originalhead->arb];
+            head1=head1->next;
+            originalhead=originalhead->next;
+        }
+        return clonehead;
+    }
