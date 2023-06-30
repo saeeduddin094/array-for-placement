@@ -1,0 +1,82 @@
+#include <bits/stdc++.h>
+
+/************************************************************
+
+    Following is the linked list node structure.
+    
+    template <typename T>
+    class Node {
+        public:
+        T data;
+        Node* next;
+
+        Node(T data) {
+            next = NULL;
+            this->data = data;
+        }
+
+        ~Node() {
+            if (next != NULL) {
+                delete next;
+            }
+        }
+    };
+
+************************************************************/
+Node<int>* solve(Node<int>* first,Node<int>* second)
+{
+
+     Node<int>*  curr1=first;
+     Node<int>* next1=first->next;
+     Node<int>* curr2=second;
+     Node<int>* next2=second->next;
+     //process
+     while(curr1!=NULL && next1!=NULL)
+     {
+         if(curr2->data>=curr1->data && curr2->data <=next1->data)
+         {
+             curr1->next=curr2;
+             next2=curr2->next;
+             curr2->next=next1;
+             curr1=curr2;
+             curr2=next2;
+         }
+         else
+         {
+             curr1=next1;
+             next1=next1->next;
+             // if first node is finished
+             if(next1==NULL)
+             {
+                 // attched remaining second node into the tail first node
+                 curr1->next=curr2;
+                 return first;
+             }
+         }
+     } 
+     return first;
+
+}
+Node<int>* sortTwoLists(Node<int>* first, Node<int>* second)
+{
+    if(first==NULL)
+    {
+        return second;
+    }
+    if(second==NULL)
+    {
+        return first;
+    }
+    // we are just checking the  value of first and last node through which we justify that which
+    //  list gonna have first ele 
+    if(first->data<=second->data)
+    {
+        return solve(first,second);
+        
+    }
+    else
+    {
+        return solve(second,first);
+        
+    }   
+}
