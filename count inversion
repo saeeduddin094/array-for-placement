@@ -1,0 +1,71 @@
+#include <bits/stdc++.h> 
+void mergesort(long long *arr,int start,int end,long long &ans)
+{
+    int mid=(start+end)/2;
+    int len1=mid-start+1;
+    int len2=end-mid;
+    vector<int> left(len1);
+    vector<int> right(len2);
+    // copy the values into duplicate vector
+    int mainindex=start;
+    for(int i=0;i<len1;i++)
+    {
+        left[i]=arr[mainindex++];
+    }
+    mainindex=mid+1;
+    for(int i=0;i<len2;i++)
+    {
+        right[i]=arr[mainindex++];
+    }
+    int i=0;
+    int j=0;
+    mainindex=start;
+    while(i<len1 && j<len2)
+    {
+        if(left[i]>right[j])
+        {
+            ans=ans+(len2-j);
+            arr[mainindex++]=left[i++];
+        }
+        else
+        {
+            
+            arr[mainindex++]=right[j++];
+        }
+    }
+    while(i<len1)
+    {
+        arr[mainindex++]=left[i++];
+    }
+    while(j<len2)
+    {
+        arr[mainindex++]=right[j++];
+    }
+
+}
+void merge(long long *arr,int start,int end,long long  &ans)
+{
+    if(start>=end)
+    {
+        return ;
+    }
+    int mid=(start+end)/2;
+    merge(arr,start,mid,ans);
+    merge(arr,mid+1,end,ans);
+    mergesort(arr,start,end,ans);
+}
+void print(long long * arr,int n)
+{
+    for(int i=0;i<n;i++)
+    {
+        cout<<arr[i]<<" ";
+    }
+    cout<<endl;
+}
+long long getInversions(long long *arr, int n)
+{
+    long long ans=0;
+    merge(arr,0,n-1,ans); 
+    // print(arr,n);  
+    return ans;
+}
