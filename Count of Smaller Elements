@@ -1,0 +1,93 @@
+void merge(vector< pair<int,int> > &v,vector<int> &count,int start,int end)
+{
+    int mid=(start+end)/2;
+    int len1=mid-start+1;
+    int len2=end -mid;
+    vector< pair<int,int> > left(len1);
+    vector< pair<int,int> > right(len2);
+    int mainindex=start;
+    for(int i=0;i<len1;i++)
+    {
+        left[i]=v[mainindex];
+        mainindex++;
+    }
+    mainindex=mid+1;
+    for(int i=0;i<len2;i++)
+    {
+        right[i]=v[mainindex];
+        mainindex++;
+    }
+    int i=0;
+    int j=0;
+    mainindex=start;
+    while(i<len1 && j<len2)
+    {
+        if(left[i].first>right[j].first)
+        {
+            v[mainindex++]=left[i];
+            // count[left[i].second]=count[left[i].second]+end-j+1;// this shows that if left[i]> right[i] then all the ele present in right after right[j] also smaller than left[i]
+            // cout<<len2<<" "<<j<<endl;
+            count[left[i].second] += (len2- j );
+
+            i++;
+        }
+        else
+        {
+            v[mainindex++]=right[j];
+            j++;
+        }
+    }
+    while(i<len1)
+    {
+        v[mainindex++]=left[i];
+        i++;
+    }
+    while(j<len2)
+    {
+        v[mainindex++]=right[j];
+        j++;
+    }
+    
+}
+void mergesort(vector< pair<int,int> > &v,vector<int> &count,int start,int end)
+{
+    if(start>=end)
+    {
+        return ;
+    }
+    int mid=(start+end)/2;
+    mergesort(v, count, start, mid);
+    mergesort(v, count, mid+1, end);
+    merge(v,count,start,end);
+}
+void print(vector< pair<int,int> > &v,int n)
+{
+    for(int i=0;i<v.size();i++)
+    {
+        cout<<v[i].first<<" "<<v[i].second<<"--";
+    }
+}
+vector<int>countNumber(int n, vector<int> &arr)
+{
+   vector<pair<int,int>> v;
+   vector<int> count(n,0);
+   for(int i=0;i<n;i++)
+   {
+       v.push_back(make_pair(arr[i],i));
+   }
+   mergesort(v,count,0,n-1);
+//    print(v,n);
+   return count;
+}
+
+
+
+
+
+
+
+
+
+
+
+
